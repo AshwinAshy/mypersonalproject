@@ -60,5 +60,16 @@ public class UserServiceImpl implements UserService{
 		User user = findBySSO(sso);
 		return ( user == null || ((id != null) && (user.getId() == id)));
 	}
+
+	@Override
+	public boolean validateUser(Integer username, String password) {
+
+		
+		if(dao.findUserByIdAndPassword(username, password))
+			return true;
+		else
+			return false;
+	}
+	
 	
 }

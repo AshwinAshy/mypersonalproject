@@ -3,6 +3,7 @@ package com.mypersonalproj.springmvc.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -152,8 +153,20 @@ public class AppController {
 	}
 
 	
-	@RequestMapping(value = { "/success" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
 	public String showSuccessPage() {
-		return "success";
+		return "login";
+	}
+	
+	@RequestMapping(value = { "/validateLogin" }, method = RequestMethod.POST)
+	public String validateLogin(HttpServletRequest request) {
+		
+		String userName = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		if(userService.validateUser(Integer.parseInt(userName), password))
+			return "success";
+		else
+			return "unsuccessful";
 	}	
 }

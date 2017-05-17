@@ -3,6 +3,7 @@ package com.mypersonalproj.springmvc.dao;
 import java.util.Collection;
 import java.util.List;
 
+import javax.management.Query;
 import javax.persistence.NoResultException;
 
 import org.springframework.stereotype.Repository;
@@ -66,4 +67,16 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	    collection.iterator().hasNext();
 	}
 
+	@Override
+	public boolean findUserByIdAndPassword(Integer id, String password) {
+		
+		try{
+			User user = (User)getEntityManager().createQuery("SELECT u FROM User u WHERE u.id='"+id+"' AND u.password='"+password+"'").getSingleResult();
+			if(user!=null)
+				return true;
+		}catch(Exception ex){
+			return false;
+		}
+		return false;
+	}
 }
